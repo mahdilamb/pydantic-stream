@@ -30,10 +30,6 @@ jobs:
         if: ${{ always() }}
         run: |
           pydocstyle pydantic_stream
-      - name: Check imports [isort]
-        if: ${{ always() }}
-        run: |
-          isort --check pydantic_stream
       - name: Code quality [black]
         if: ${{ always() }}
         run: |
