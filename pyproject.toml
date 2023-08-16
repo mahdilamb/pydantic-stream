@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools"]
+
+[project]
+name ="pydantic-stream"
+description = "Package to enable lazy loading of json into PyDantic models."
+dynamic = ["version"]
+
+authors = [{name="Mahdi Lamb", email="mahdilamb@gmail.com"}]
+dependencies =[
+    "pydantic",
+    "json-stream"
+]
+
+[project.optional-dependencies]
+test=[
+    "black",
+    "isort",
+    "mypy",
+    "bandit",
+    "pytest",
+    "pytest-cov",
+    "docformatter",
+    "pydocstyle"
+]
+
+[tool.setuptools.dynamic]
+version = {attr = "pydantic_stream.__version__"}
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+
+[tool.black]
+line-length = 88
+target-version = ['py37']
+
+[tool.docformatter]
+black = true
+recursive = true
+
+[tool.mypy]
+plugins = "pydantic.mypy"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = [
+    "tests",
+]
