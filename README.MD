@@ -16,7 +16,7 @@ Add to `pyproject.toml`:
 ```toml
 ...
 dependencies = [
-    "pydantic_stream@git+https://github.com/mahdilamb/pydantic-stream"
+    "pydantic-stream@git+https://github.com/mahdilamb/pydantic-stream"
 ]
 ```
 # Usage
