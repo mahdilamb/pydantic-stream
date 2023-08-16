@@ -21,6 +21,7 @@ test=[
     "pytest",
     "pytest-cov",
     "docformatter",
+    "pydocstyle"
 ]
 
 [tool.setuptools.dynamic]
