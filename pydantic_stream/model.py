@@ -3,8 +3,19 @@ import abc
 import functools
 import logging
 import typing
-from typing import (Any, Generic, Mapping, Optional, Sequence, TextIO, Tuple,
-                    Type, TypeVar, Union, cast)
+from typing import (
+    Any,
+    Generic,
+    Mapping,
+    Optional,
+    Sequence,
+    TextIO,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+    cast,
+)
 
 import json_stream  # type: ignore
 import json_stream.base  # type: ignore
