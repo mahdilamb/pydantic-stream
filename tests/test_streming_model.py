@@ -7,7 +7,7 @@ import pydantic_stream
 from pydantic_stream import exceptions
 
 
-def test_simple_model(json_file):
+def simple_model_test(json_file):
     """Test that attrs can be accessed from a flat model."""
 
     class Model(pydantic.BaseModel):
@@ -35,7 +35,7 @@ def test_simple_model(json_file):
         model[0]
 
 
-def test_nested_model(json_file):
+def nested_model_test(json_file):
     """Test that attrs can be accessed from a nested model."""
 
     class Results(pydantic.BaseModel):
@@ -56,7 +56,7 @@ def test_nested_model(json_file):
         model.results[0]
 
 
-def test_simple_alias_model(json_file):
+def simple_alias_model_test(json_file):
     """Test that attrs can be accessed via aliases."""
 
     class AliasedModel(pydantic.BaseModel):
@@ -71,7 +71,7 @@ def test_simple_alias_model(json_file):
     assert pydantic_stream.resolve(model.results) == list("abc")
 
 
-def test_default_types_model(json_file):
+def default_types_model_test(json_file):
     """Test that attrs can be accessed via aliases."""
 
     class AliasedModel(pydantic.BaseModel):
@@ -88,7 +88,7 @@ def test_default_types_model(json_file):
     assert pydantic_stream.resolve(model.results) == list("abc")
 
 
-def test_multiple_cursors_work(json_file):
+def multiple_cursors_work_test(json_file):
     """Test that cursors created in one sequence can be resolved in another."""
 
     class Model(pydantic.BaseModel):
@@ -104,7 +104,7 @@ def test_multiple_cursors_work(json_file):
     assert pydantic_stream.resolve(a) == 3
 
 
-def test_multiple_cursors_work_reversed(json_file):
+def multiple_cursors_work_reversed_test(json_file):
     """Test that cursors created in one sequence can be resolved in another."""
 
     class Model(pydantic.BaseModel):
@@ -120,7 +120,7 @@ def test_multiple_cursors_work_reversed(json_file):
     assert pydantic_stream.resolve(b) == list("abc")
 
 
-def test_union_types(json_file):
+def union_types_test(json_file):
     """Test that union types are parsed correctly."""
 
     class A(pydantic.BaseModel):
@@ -155,7 +155,7 @@ def test_union_types(json_file):
     assert isinstance(values[2], A)
 
 
-def test_union_types_list(json_file):
+def union_types_list_test(json_file):
     class Model(pydantic.BaseModel):
         a: Union[List[str], int]
 
@@ -163,7 +163,7 @@ def test_union_types_list(json_file):
     assert pydantic_stream.resolve(model.a[1]) == "y"
 
 
-def test_nested_aliases(json_file):
+def nested_aliases_test(json_file):
     class A(pydantic.BaseModel):
         a: str = pydantic.Field(alias="$a")
 

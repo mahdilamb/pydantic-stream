@@ -1,5 +1,7 @@
 # Pydantic stream
 
+[![Check code quality and run unit tests](https://github.com/mahdilamb/pydantic-stream/actions/workflows/code-quality-and-tests.yaml/badge.svg)](https://github.com/mahdilamb/pydantic-stream/actions/workflows/code-quality-and-tests.yaml)
+
 Python package designed to enable lazy loading fo json files into pydantic modules. 
 
 

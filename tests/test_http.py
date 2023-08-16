@@ -6,7 +6,7 @@ import pydantic
 import pydantic_stream
 
 
-def test_sample_json():
+def sample_json_test():
     """Test loading json from a url."""
 
     class Question(pydantic.BaseModel):
