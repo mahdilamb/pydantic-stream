@@ -17,7 +17,7 @@ bandit: # Run security checks with bandit.
 	bandit -r ${MAIN_PACKAGE_DIRECTORY}
 
 docstrings: # Format the docstrings using docformatter
-	docformatter --in-place -r ${PYTHON_SRC_DIRECTORIES}
+	docformatter --in-place -r ${PYTHON_SRC_DIRECTORIES}; pydocstyle ${PYTHON_SRC_DIRECTORIES}
 
 format: isort black docstrings # Format the source files with isort and black.
 

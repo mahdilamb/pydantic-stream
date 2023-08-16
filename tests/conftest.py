@@ -1,6 +1,7 @@
+"""Shared utilities for pytest."""
 import json
 import tempfile
-from typing import Any, Callable, Dict
+from typing import Any, Dict
 
 import pytest
 

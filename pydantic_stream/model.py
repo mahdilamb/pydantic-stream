@@ -1,3 +1,4 @@
+"""Module containing the main functions for streaming a json file as pydantic models."""
 import abc
 import functools
 import logging
@@ -29,6 +30,8 @@ T = TypeVar("T")
 
 
 class StreamedValue(abc.ABC, Generic[T]):
+    """API for a streamed value."""
+
     @abc.abstractmethod
     def __stream_value__(self) -> T:
         """Get the value."""
@@ -37,6 +40,23 @@ class StreamedValue(abc.ABC, Generic[T]):
 def stream_model(
     cls: PydanticModel, fp: TextIO, allow_rewind: bool = True
 ) -> PydanticModel:
+    """Stream a model as pydantic models.
+
+    Parameters
+    ----------
+    cls : PydanticModel
+        The pydantic model
+    fp : TextIO
+        The stream
+    allow_rewind : bool, optional
+        Whether to allow returning the file handle to the start of the stream, by default True
+
+    Returns
+    -------
+    PydanticModel
+        A copy of the input model, but with all the utilities for streaming.
+    """
+
     def rewind(next_path, field_info):
         cursor = json_stream.load(fp)
         for path in next_path:
@@ -55,6 +75,7 @@ def stream_model(
             self.__path = path
             self.__field_info = field_info
 
+        @typing.no_type_check
         def __getattr__(self, name: str):
             field_info = self.__field_info
             if field_info is None:
@@ -139,7 +160,8 @@ def stream_model(
         )
         allow_rewind = False
     return cast(
-        PydanticModel, StreamedNode(json_stream.load(fp), tuple(), field_info=None)
+        PydanticModel,
+        StreamedNode(json_stream.load(fp), tuple(), field_info=None),
     )
 
 
