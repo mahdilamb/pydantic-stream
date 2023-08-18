@@ -1,10 +1,12 @@
 """Module containing the main functions for streaming a json file as pydantic models."""
 import abc
+import dataclasses
 import functools
 import logging
 import typing
 from typing import (
     Any,
+    Dict,
     Generic,
     Mapping,
     Optional,
@@ -56,6 +58,7 @@ def stream_model(
     PydanticModel
         A copy of the input model, but with all the utilities for streaming.
     """
+    cache: Dict[Tuple[Union[str, int], ...], "StreamedNode"] = {}
 
     def rewind(next_path, field_info):
         cursor = json_stream.load(fp)
@@ -110,7 +113,6 @@ def stream_model(
                             )
                         ]
                     )
-                    print(field_info)
                 else:
                     if not hasattr(
                         field_info.annotation, "__origin__"
@@ -122,18 +124,22 @@ def stream_model(
             if isinstance(name, str) and field_info.alias:
                 name = field_info.alias
             next_path = self.__path + (name,)
+            cached = cache.get(next_path, dataclasses.MISSING)
+            if cached is not dataclasses.MISSING:
+                return cached
             try:
-                return StreamedNode(
+                node = cache[next_path] = StreamedNode(
                     cursor=self.__cursor[name], path=next_path, field_info=field_info
                 )
+                return node
             except json_stream.base.TransientAccessException as e:
+                if (
+                    field_info.default is not pydantic_core.PydanticUndefined
+                    or field_info.default_factory is not None
+                ):
+                    return StreamedNode(None, path=next_path, field_info=field_info)
                 if allow_rewind:
                     cast(TextIO, fp).seek(0)
-                    if (
-                        field_info.default is not pydantic_core.PydanticUndefined
-                        or field_info.default_factory is not None
-                    ):
-                        return StreamedNode(None, path=next_path, field_info=field_info)
                     return rewind(next_path, field_info)
                 raise e
 
