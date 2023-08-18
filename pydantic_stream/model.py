@@ -39,8 +39,8 @@ class StreamedValue(abc.ABC, Generic[T]):
         """Get the value."""
 
 
-def stream_model(
-    cls: PydanticModel, fp: TextIO, allow_rewind: bool = True
+def      stream_model(
+    cls: PydanticModel, fp:     TextIO, allow_rewind: bool = True
 ) -> PydanticModel:
     """Stream a model as pydantic models.
 
