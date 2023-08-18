@@ -10,7 +10,10 @@ jobs:
     steps:
     - uses: mahdilamb/check-python-package@main
       with: 
-        version_path: pydantic_stream/__init__.py
+        use_version_check: true
+        version_check_path: pydantic_stream/__init__.py
+        use_black: true
+        black_args: "pydantic_stream" "tests"
 
   build:
     needs: prepare
