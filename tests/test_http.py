@@ -3,10 +3,10 @@ from typing import Dict, List, Optional
 
 import pydantic
 
-import     pydantic_stream
+import pydantic_stream
 
 
-def      sample_json_test():    
+def sample_json_test():
     """Test loading json from a url."""
 
     class Question(pydantic.BaseModel):
@@ -28,8 +28,8 @@ def      sample_json_test():
 
 
 if __name__ == "__main__":
-    import     sys
+    import sys
 
     import pytest
 
-    sys.exit(   pytest.main(["-v", "-s"] + sys.argv))
+    sys.exit(pytest.main(["-v", "-s"] + sys.argv))
